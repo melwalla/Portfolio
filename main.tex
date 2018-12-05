@@ -6,6 +6,9 @@
 %\pagestyle{empty}
 \textwidth = 7 in\textheight = 9.5 in\oddsidemargin = -.25 in\evensidemargin = -.25 in\topmargin = -.25 in\headheight = 0.0 in\headsep = 0.0 in\parskip = 0.2in\parindent = 0.0in
 \newcommand{\ds}{\displaystyle}
+\newenvironment{rcases}
+  {\left.\begin{aligned}}
+  {\end{aligned}\right\rbrace}
 
 \title{Independent Study in Differential Equations}
 \date{2018\\Fall Semester}
@@ -103,6 +106,7 @@
     $$\text{initial conditions:  } k=1=R, T(0)=T_0$$
 
     \newpage
+    
     \subsection{Direction Fields}
 %include the handout before this in the binder.
     
@@ -157,7 +161,7 @@
             y'(t)+\frac{a_0(t)}{a_1(t)}y(t)&=&\frac{\^f(t)}{a_1(t)}\\
             y'(t)+p(t)y&=&f(t).
         \end{eqnarray*}
-        Where $f(t)=0$, the solution is {\it homogeneous}. And where $f(t)\neq 0$, the solution is called {\it inhomogeneous}.
+        Where $f(t)=0$, the solution is {\it homogeneous}. And where $f(t)\neq 0$, the solution is called {\it in-homogeneous}.
         
     \subsection{Variation of Parameters}
 %use textbook to provide an introduction as to why this approach is different from separation of variables and why we would use it.
@@ -250,7 +254,7 @@
         Thus, the solution is $y=\frac{c}{t^5}+t^2$.
         
         \item[3.] Solve $y'+\frac{y}{x}=xy^2$ using the substitution $z=\frac{1}{y}$ to create a linear differential equation.\\
-        Therefore, $z=z[y(x)]$ and thus $\frac{dz}{dx}=\frac{dz}{dy}\cdot\frac{dy}{dx}$. Using this, we get $z'(x)=\frac{-1}{y^2}y'$. Solving this equation for $y'$ yeilds $y'=-y^2 z'(t)$. We can now use this in place of $y'$ and $y$ within the equation.
+        Therefore, $z=z[y(x)]$ and thus $\frac{dz}{dx}=\frac{dz}{dy}\cdot\frac{dy}{dx}$. Using this, we get $z'(x)=\frac{-1}{y^2}y'$. Solving this equation for $y'$ yields $y'=-y^2 z'(t)$. We can now use this in place of $y'$ and $y$ within the equation.
         \begin{eqnarray*}
             \int{y'dy}&=&\int{y^2 z'(t)dy}\\
         \end{eqnarray*}
@@ -258,10 +262,168 @@
         \end{enumerate}
         
     \subsection{Integrating Factor}
-%use textbook to introduce why this approach is different from the others. what benefit does it provide, why should we use it, and when?
-    Another approach to solving nth Order Differential Equations is through the method of Integrating Factors. By using the integrating factor approach, we use the same equation: $y'(t)+p(t)y(t)=f(t)$ but this time we designate a specific factor to multiply through the equation with. We will declare this factor as follows, $$\mu=e^{\int{p(t)dt}}$$.
+!!!!!!!! %use textbook to introduce why this approach is different from the others. what benefit does it provide, why should we use it, and when?
+    Another approach to solving nth Order Differential Equations is through the method of Integrating Factors. By using the integrating factor approach, we use the same equation: $y'(t)+p(t)y(t)=f(t)$ but this time we designate a specific factor to multiply through the equation with. We will declare this factor as follows, $$\mu=e^{\int{p(t)dt}}.$$
 %add a reason why we selected mu to be this.
     Therefore, $$e^{\int{p(t)dt}}y'(t)+e^{\int{p(t)dt}}p(t)y(t)=e^{\int{p(t)dt}}f(t).$$
-        
+%I'm not exactly sure why we do the following thing. so add an explanation later.
+    See that, $$\int{e^{\int{p(t)dt}}y(t)dt}&=&e^{\int{p(t)dt}}y'(t)+e^{\int{p(t)dt}}p(t)y(t).$$ Then also, $$\frac{d}{dt}[e^{\int{p(t)dt}}y(t)]=e^{\int{p(t)dt}}f(t).$$
+    In this case we have declared the derivative of the function $y(t)$, to be $f(t)$. Now we solve for $y(t)$,
+    \begin{eqnarray*}
+        e^{\int{p(t)dt}}y(t)&=&\int{e^{\int{p(t)dt}}f(t)dt}\\
+        y(t)&=&\frac{\int{e^{\int{p(t)dt}}f(t)dt}+c}{e^{\int{p(t)dt}}}\\
+        y(t)&=&\int{e^{\int{p(t)dt}}f(t)dt}\cdot e^{-\int{p(t)dt}}+ce^{-\int{p(t)dt}}
+    \end{eqnarray*}
+    
+    \subsection{Mixing Problems}
+%probably just input the actual paper for this.
+%could include the example problem. The solution and work to the example problem is in the notebook.
+
+        \begin{enumerate}
+            \item {\it A 500 liter tank initially contains 10g of salt dissolved in 200 liters of water. Starting at t=0, water that contains 1/4g of salt per liter is poured into the tank at a rate of 4 liters/min and the mixture is drained from the tank at the rate of 2 liters/min. Find a differential equation for the quantity $Q(t)$ or salt in the tank at time t prior to the time when the tank overflows and find the concentration $K(t)$ (g/liter) of salt in the tank at any such time.}\\ \\
+            First note the following numbers:\\
+            $v=500 L,\hspace{.25cm} c_0=10 g/L, \hspace{.25cm}f_0=2 L/min, \hspace{.25cm}c_i=\frac{1}{4} g/L, \hspace{.25cm}f_i=4 L/min$\\
+            Set up the equation as follows, $f_i c_i = \frac{4 L}{1 min}\cdot\frac{1 g}{4 L} = 1 L/min$. Then also by applying the initial amount of water and the difference of $f_i-f_0$, we get $v(t)=200+2t$. By this, the weight equation becomes $w'(t)+\frac{1}{100+t}w(t)=1$. In this case, $p(t)=\frac{1}{100t}$. Therefore, $\mu=e^{\int{p(t)dt}}=e^{\ln{(100+t)}}=100+t$.\\
+            \begin{eqnarray*}
+                (100+t)w'(t)+(100+t)\frac{1}{100+t}w(t)&=&(100+t)\\
+                \frac{d}{dt}[(100+t)w(t)]&=&(100+t)\\
+                (100+t)w(t)&=&\int{(100+t)dt}\\
+                (100+t)w(t)&=&100t+\frac{t^2}{2}+c\\
+                w(t)&=&\frac{100t+\frac{t^2}{2}+c}{(100+t)} = Q(t)
+            \end{eqnarray*}
+            Notice then, $$K(t)=\frac{Q(t)}{\text{volume}}=\frac{100t+\frac{t^2}{2}+c}{(100+t)\cdot 500}.$$
+%add the solution to c found on mathematica file. also help to double check solution from mathematica in order to confirm that this will work.
+            
+            \item {\it Tank 1 initially contains 100 gal of pure ethanol. Pure water flows into this tank at a rate of 10 gal/min. The perfectly mixed solution flows out of the tank at the same rater, and into Tank 2. Tank 2 initially contains 200 gal of pure water. The perfectly mixed solution leaves Tank 2 at 10 gal/min. Find the quantity or ethanol in each tank, $Q_1(t)$ and $Q_2(t)$. When does Tank 2 reach its maximum level of ethanol?}\\ \\
+            $v_1=100 L\text{  pure ethanol},\hspace{.25cm} f_{i1}=10 gal/min,\hspace{.25cm} c_{i1}=0\text{  pure water},\hspace{.25cm} f_{01}=10 gal/min$\\
+            $v_2=200 L\text{  pure water},\hspace{.25cm} f_{i2}=10 gal/min,\hspace{.25cm} c_{i2}=100\text{  pure ethanol},\hspace{.25cm} f_{02}=10 gal/min$\\
+            Beginning with Tank 1: $$f_{i1}c_{i1}=10\cdot0 = 0.$$
+            Thus,
+            \begin{eqnarray*}
+                w_1'(t)+\frac{10}{100}w_1(t)&=&0\\
+                w_1'(t)+\frac{1}{10}w_1(t)&=&0
+            \end{eqnarray*}
+            Use integrating factor to solve this equation.\\
+            $p(t)=\frac{1}{10}$, therefore $\mu=e^{\int p(t)dt}=e^{\frac{t}{10}}$.
+            \begin{eqnarray*}
+            e^{\frac{t}{10}}w_1'(t)+e^{\frac{t}{10}}(\frac{1}{10})w_1(t)&=&0\\
+            \frac{d}{dt}[e^{\frac{t}{10}}w_1(t)]&=&0\\
+            e^{\frac{t}{10}}w_1(t)&=&\int{0dt}\\
+            e^{\frac{t}{10}}w_1(t)&=&0+c\\
+            w_1(t)&=&\frac{c}{e^{\frac{t}{10}}} =ce^{-\frac{t}{10}}\\
+            w_1(t)&=&100e^{-\frac{t}{10}}
+            \end{eqnarray*}
+            
+            Now onto Tank 2: $$f_{i2}c_{i2}=100\cdot10 = 1000.$$
+            Thus,
+            \begin{eqnarray*}
+                w_2'(t)+\frac{10}{200}w_2(t)&=&10e^{-\frac{t}{10}}
+            \end{eqnarray*}
+            Using integrating factor with $p(t)=\frac{10}{200}$, we get $\mu=e^{\int p(t)dt}=e^{\frac{t}{20}}$.
+            \begin{eqnarray*}
+            e^{\frac{t}{20}}w_2'(t)+e^{\frac{t}{20}}(\frac{1}{20})w_2(t)&=&e^{\frac{t}{20}}(10e^{-\frac{t}{10}})\\
+            \frac{d}{dt}[e^{\frac{t}{20}}w_2(t)]&=&e^{\frac{t}{20}}10e^{-\frac{t}{10}}\\
+            e^{\frac{t}{20}}w_2(t)&=&\int{e^{-\frac{t}{20}}dt}\\
+            e^{\frac{t}{20}}w_2(t)&=&-20e^{-\frac{t}{20}}+c\\
+            w_2(t)&=&\frac{-20e^{-\frac{t}{20}}+c}{e^{\frac{t}{20}}}\\
+            w_2(t)&=&e^{-\frac{t}{20}}(-20e^{-\frac{t}{20}}+c)
+            \end{eqnarray*}
+            With c=220. 
+%answer the actual question here at some point. the actual question is not answered yet.
+        \end{enumerate}
+    
+    \subsection{Solutions of nth Order, Constant Coefficient, Linear, Homogeneous ODEs/IVPs}
+        {\bf Theorem 1} {\it Let $y_1,...,y_n$ be linearly independent solutions of the homogeneous equation} 
+            \begin{eqnarray*}
+            y^{(n)}+a_{n-1}y^{(n-1)}+&...&a_1y^{(1)}+a_0y=0 &(1)
+            \end{eqnarray*}
+            {\it If Y is any solution whatsoever of (1) on $\mathbb{R}$, then there exist numbers $c_1,...,c_n$ such that $$Y(t)=c_1y_1(t)+...+c_n y_n (t)$$ for all $t\in\mathbb{R}$.}\\
+        {\bf Theorem 2} {\it (1) has a unique solution on $\mathbb{R}$ that satisfies the n conditions $$y(a)=b_0,\hspace{.5cm}y'(a)=b_1,\hspace{.5cm}...\hspace{.5cm},\hspace{.5cm} y^{(n-1)}(a)=b_{(n-1)}.$$}
+
+    \subsection{Achieving Linearly Independent Solutions For nth Order Equations}
+    Here we consider constant coefficient homogeneous differential equations of the form 
+    $$y^{(n)}+a_{(n-1)}y^{(n-1)}+..+a_1 y^{(1)}+a_0 y=0.$$
+    Assuming the solution $y=e^{rt}$, we compute the auxiliary equation: $$r^n +a_{n-1} r^{n-1} +...+a_1r+a_0 =0.$$
+    Now per the Fundamental Theorem of Algebra, we are ensured the existence of $n$ solutions. If these roots are all distinct, i.e. $$(r-r_1)(r-r_2)...(r-r_n)=0,$$
+    then it can be shown that the solutions $y_i=e^{r_i t}$ are all linearly independent. So the general solution is $$y(t)=c_1 e^{r_1 t}+...+c_1 e^{r_n t}.$$
+    If we have repeated roots, then we must achieve linear independence in some alternate manner. For convenience, we can define the general differential equation using the operators $D^n =\frac{d^n}{dt^n}$, for $n=1,2,...$. Then we rewrite the equation as
+    \begin{eqnarray*}
+        D^n y+a_{n-1}D^{n-1}y+...+a_1 Dy+a_0 y&=&0, \text{ or}\\
+        (D-r_1)(D-r_2)...(D-r_n)y&=&0.
+    \end{eqnarray*}
+    Now assume there are $k$ repeated roots. Then we can focus on that portion of the differential equation:
+    \begin{eqnarray*}
+        (D-r_1)^k y &=& 0, \text{ or}\\
+        \underbrace{(D-r_1)...(D-r_1)}_k y&=&0.
+    \end{eqnarray*}
+    At this point, we can identify only one independent solution $y_1=e^{r_1 t}$. We still need to find the remaining $k-1$ solutions. To do so, we try the solution $y=u(t)e^{r_1 t}$ in our differential equation, and attempt to find the coefficient $u(t)$:
+    $$\underbrace{(D-r_1)...(D-r_1)}_k u(t)e^{r_1 t} =0.$$
+    Note that
+    \begin{eqnarray*}
+        (D-r_1)u(t)e^{r_i t} &=& Du(t)e^{r_1 t}-r_1 u(t)e^{r_1 t}\\
+        &=& u'(t)e^{r_1 t}+u(t)r_1e^{r_1 t}-r_1 u(t)e^{r_1 t}\\
+        &=&u'(t)e^{r_1 t}.
+    \end{eqnarray*}
+    We then apply the next operator to this function, and note that:
+    $$(D-r_1)^2 = (D-r_1)(u'(t)e^{r_1 t}=...=u''(t)e^{r_1 t}.$$
+    Proceeding inductively, we find that
+    $$(D-r_1)^k = u^{(k)}(t)e^{r_1 t}.$$
+    We set this equal to zero, as required by the differential equation:
+    \begin{eqnarray*}
+        u^{(k)}(t)e^{r_1 t} &=& 0 \Rightarrow\\
+        u^{(k)}(t)&=&0.
+    \end{eqnarray*}
+    At this point we can integrate $k$ times to solve for $u(t)$:
+    $$u(t)=c_0+c_1 t+c_2 t^2 +...+c_{k-2}t^{k-2}+c_{k-1}t^{k-1}.$$
+    As such, we see the repeated portion(s) of the general solution to the differential equation is comprised of $k$ linearly independent solutions:
+    \begin{eqnarray*}
+        y(t)&=&u(t)e^{r_1 t}\\
+        &=&(c_0+c_1 t+c_2 t^2 +...+c_{k-2} t^{k-2} +c_{k-1} t^{k-1})e^{r_1 t}\\
+        &=&\underbrace{c_0 e^{r_1 t}+c_1 t e^{r_1 t}+c_2 t^2 e^{r_1 t}+...+c_{k-2} t^{k-2} e^{r_1 t}+c_{k-1} t^{k-1}e^{r_1 t}}_k .
+    \end{eqnarray*}
+    This portion is then combined with the other $n-k$ linearly independent solutions, for the full general solution.\\
+    (Via Trent Kull).
+    
+    \subsection{2nd Order, Linear, Constant Coefficient, Homogeneous Equations}
+    When solving differential equations of the form:
+    $$y''(t)+a_1 (t) y'(t)+a_0(t)y(t)=f(t)=0,$$
+    such that $a_1(t), a_0(t)\in\mathbb{R}$, the equation simplifies to
+    $$y''(t)+by'(t)+cy(t)=0,$$
+    and there are three resulting cases. To find these, we begin by making a guess that the general solution will take on a form that follows:
+    \begin{eqnarray*}
+        y(t)&=&e^{rt}\\
+        y'(t)&=&re^{rt}\\
+        y''(t)&=&r^2 e^{rt}.
+    \end{eqnarray*}
+    By this, we adjust the equation to,
+    \begin{eqnarray*}
+        r^2 e^{rt}+b re^{rt}+ce^{rt}&=&0 \Rightarrow\\
+        r^2+br+c&=&0\\
+        r&=&\frac{-b\pm \sqrt{b^2-4(1)(c)}}{2(1)}.
+    \end{eqnarray*}
+    We therefore find the division into three different cases of solution sets.\\
+    
+    \underline{Case 1:} Solutions are Real and Distinct. Thus, $r_1\neq r_2$.\\
+    In this case, the resulting solutions maintain their original form:
+    \begin{eqnarray*}
+        \begin{rcases}
+        y_1(t)&=&e^{r_1 t}\\
+        y_2(t)&=&e^{r_2 t}
+        \end{rcases}
+        y(t)=c_1 y_1(t)+c_2 y_2(t)
+    \end{eqnarray*}
+    Thus,
+    \begin{eqnarray*}
+        y_1''(t)+by_1'+cy_1&=&0\\
+        y_2''(t)+by_2'+cy_2&=&0
+    \end{eqnarray*}
+    And because $y=y_1+y_2$, we get
+    $$(y_1''+y_2'')+b(y_1'+y_2')+c(y_1+y_2)=0.$$
+    
+    \underline{Case 2:} Solutions are Real but Repeated. Thus, $r_1=r_2$.\\
+    In this case, the solutions are ``not different enough". So we must find another solution and because of this, there is more work required with this case.\\
+%add this later
+
+    \underline{Case 3:} Solutions are Complex and Distinct. Thus, $r_{1,2}=\alpha\pm i\beta,$ where $\beta\neq 0$.\\
     
 \end{document}
